@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Lecture 12 - Example 2 - Google Maps API</title>
+ <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+ <style type="text/css">
+ html { height: 100% }
+ body { height: 100%; margin: 0; padding: 0 }
+ #map_canvas { height: 100% }
+ </style>
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBPjBaq7O-RL1KqHXjL92jMhqKAQMhcN8s">
+</script>
+<script type="text/javascript">
+function initialize(){
+	if (navigator && navigator.geolocation) {
+		navigator.geolocation.watchPosition(userLocated, locationError);
+	} else {
+		error('positioning not supported.');
+	}
+}
+
+function userLocated(position) {
+	var lat = position.coords.latitude;
+	var long = position.coords.longitude;
+	var locateTime = position.timestamp;
+	showPosition(lat,long);
+}
+
+function locationError(error) {
+	alert(error.code);
+}
+
+function showPosition(latitude, longitude) {
+    var myOptions = { center: new google.maps.LatLng(latitude, longitude), zoom: 12, mapTypeId: google.maps.MapTypeId.HYBRID, mapTypeControl:false};
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var userPosition = new google.maps.Marker({position: new google.maps.LatLng(latitude, longitude), title:"You are here"});
+    var marker = new google.maps.Marker({position: new google.maps.LatLng(53.3385241, -6.2666055), title:"DIT : Aungier Street"});
+    
+    marker.setMap(map);
+    userPosition.setMap(map);
+}
+</script>
+</head>
+<body onload="initialize()">
+<div id="map_canvas" style="width:100%; height:100%"></div>
+ </body>
+</html>
